@@ -117,9 +117,7 @@ function get_remote_featured_image($featured_image_id){
     $url=BASE_URL.'/wp-json/wp/v2/media/'.$featured_image_id;
     $html=wp_remote_get($url);
     $image = json_decode(wp_remote_retrieve_body($html)); 
-    if(!image){
-        return null;
-    }
+   
     $image_url = $image->guid->rendered;
     $image_filename = basename($image_url);
     return   ['url'=>$image_url,'filename'=>$image_filename];
