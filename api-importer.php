@@ -79,6 +79,8 @@ function call_api() {
                 foreach ($images as $image) {
                     preg_match_all('/src="([^"]+)"/i',$image, $result);
                     $image_url=$result[1][0];
+                 
+
                     $image_filename = basename($image_url);
                     $local_id=get_local_featured_image(['url'=>$image_url,'filename'=>$image_filename]);
                     if ($local_id==0) {
@@ -142,6 +144,10 @@ function get_local_featured_image($featured){
 function create_local_featured_image($featured){
  
     $upload_dir = wp_upload_dir();
+
+    //original
+    $featured['url'] = preg_replace('/-\d+x\d+(?=\.[a-z]{3,4}$)/i', '', $featured['url']);
+
     $image_data = file_get_contents($featured['url']);
 
     if (wp_mkdir_p($upload_dir['path'])) {
